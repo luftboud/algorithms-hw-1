@@ -34,4 +34,11 @@ struct DB {
 
     vector<pair<string, string>> find_by_group(const string& group);
 
+    vector<string > groups_bs_list(const string& surname);
+    vector<string> groups_bs_hash(const string& surname);
+    vector<string> groups_bs_bst(const string& surname);
+
+
+    vector<string > groups_by_surname(const string& surname);
+
 };

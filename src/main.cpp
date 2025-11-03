@@ -10,5 +10,10 @@ int main() {
     //  2. group     - 6
     //  3. surname   - 1
 
-    initialize(f, s, database, 8);
+    initialize(f, s, database, 1);
+    vector<string> t = database.groups_by_surname("Шевченко");
+    std::cout << database.bst.size() << std::endl;
+    std::cout << t.size() << std::endl;
+    int a = 0;
+
 }

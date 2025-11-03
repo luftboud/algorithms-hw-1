@@ -94,3 +94,68 @@ vector<pair<string, string>> DB::find_bg_bst(const string& group){
     }
     return result;
 }
+
+//groups by surname ------------
+
+vector<string> DB::groups_by_surname(const string& surname) {
+    vector<string> result;
+    if (this->mode == Mode::List) {
+        result = this->groups_bs_list(surname);
+    } else if (this->mode == Mode::Hash) {
+        result = this->groups_bs_hash(surname);
+    } else {
+        result = this->groups_bs_bst(surname);
+    }
+    return result;
+}
+vector<string > DB::groups_bs_list(const string& surname) {
+    vector<string> result;
+    if (this->mode != Mode::List) return result;
+
+    std::unordered_set<std::string> seen; // that's so groups won't repeat
+
+    for ( vector<string >& s : this->list)  {
+        if (s[1] == surname) {
+            if (seen.insert(s[6]).second) {// .second == true if val is not in seen yet
+                result.emplace_back(s[6]);
+            }
+        }
+    }
+    return result;
+}
+vector<string > DB::groups_bs_hash(const string& surname) {
+    vector<string> result;
+    if (this->mode != Mode::Hash) return result;
+
+    result.reserve(this->hash.count(surname));
+    auto [it, last] = this->hash.equal_range(surname);
+
+    std::unordered_set<std::string> seen; // that's so groups won't repeat
+
+    for (; it != last; ++it) {
+        const vector<string >& student = it->second;
+        if (seen.insert(student[6]).second) {// .second == true if val is not in seen yet
+            result.emplace_back(student[6]);
+        }
+    }
+
+    return result;
+}
+vector<string > DB::groups_bs_bst(const string& surname) {
+    vector<string> result;
+    if (this->mode != Mode::BST) return result;
+
+    result.reserve(this->bst.count(surname));
+    auto [it, last] = this->bst.equal_range(surname);
+
+    std::unordered_set<std::string> seen; // that's so groups won't repeat
+
+    for (; it != last; ++it) {
+        const vector<string >& student = it->second;
+        if (seen.insert(student[6]).second) {// .second == true if val is not in seen yet
+            result.emplace_back(student[6]);
+        }
+    }
+
+    return result;
+}
