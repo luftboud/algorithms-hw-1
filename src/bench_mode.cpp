@@ -30,7 +30,7 @@ inline const vector<string>& pick_random_row(const DB& db, mt19937_64& rng) {
 }
 
 
-void bench_mode(Mode mode, const char* mode_name) {
+void bench_mode(Mode mode, const char* mode_name, bool sort) {
     using clock = chrono::steady_clock;
     mt19937_64 rng(1234567);
 
@@ -79,28 +79,29 @@ void bench_mode(Mode mode, const char* mode_name) {
     }
 
 // sorting --------------
+    if (sort) {
+        for (size_t n: sizes) {
+            DB database_list(Mode::List);
+            string f = "../students.csv";
+            size_t phone_num = 8;
 
-    for (size_t n : sizes) {
-        DB database_list(Mode::List);
-        string f = "../students.csv";
-        size_t phone_num = 8;
+            initialize(f, n, database_list, phone_num);
 
-        initialize(f, n, database_list, phone_num);
+            uint64_t s1 = 0, s2 = 0;
+            auto t0_1 = clock::now();
+            while (chrono::duration<double>(clock::now() - t0_1).count() < 10.0) {
+                database_list.standard_sort(false);
+                ++s1;
+            }
+            DB database_bst(Mode::BST);
+            initialize(f, n, database_bst, phone_num);
 
-        uint64_t s1=0, s2=0;
-        auto t0_1 = clock::now();
-        while (chrono::duration<double>(clock::now() - t0_1).count() < 10.0) {
-            database_list.standard_sort(false);
-            ++s1;
+            auto t0_2 = clock::now();
+            while (chrono::duration<double>(clock::now() - t0_2).count() < 10.0) {
+                database_bst.bst_sort(false);
+                ++s2;
+            }
+            std::cout << "standard sort: " << n << " : " << s1 << " ; " << "bst sort" << " : " << s2 << "\n";
         }
-        DB database_bst(Mode::BST);
-        initialize(f, n, database_bst, phone_num);
-
-        auto t0_2 = clock::now();
-        while (chrono::duration<double>(clock::now() - t0_2).count() < 10.0) {
-            database_bst.bst_sort(false);
-            ++s2;
-        }
-        std::cout << "standard sort: " << n << " : " << s1 << " ; " << "bst sort" << " : " << s2 << "\n";
     }
 }

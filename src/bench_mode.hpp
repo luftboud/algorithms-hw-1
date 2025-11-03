@@ -5,4 +5,4 @@
 
 inline const vector<string>& pick_random_row(const DB& db, mt19937_64& rng);
 
-void bench_mode(Mode mode, const char* mode_name);
+void bench_mode(Mode mode, const char* mode_name, bool sort = false);

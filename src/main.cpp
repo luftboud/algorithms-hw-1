@@ -3,6 +3,6 @@
 int main() {
     bench_mode(Mode::List, "list");
     bench_mode(Mode::Hash, "hash");
-    bench_mode(Mode::BST,  "bst");
+    bench_mode(Mode::BST,  "bst", true);
     return 0;
 }
