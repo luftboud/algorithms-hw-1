@@ -51,7 +51,7 @@ void initialize(string& filename, size_t limit, DB& db, size_t task_idx) {
             db.list.push_back(std::move(cells));
         } else if (db.mode == Mode::Hash) {
             if (db.hash.size() >= limit) break;
-            db.hash[key] = cells;
+            db.hash.emplace(key, std::move(cells));
         } else {
             if (db.bst.size() >= limit) break;
             db.bst.emplace(key, std::move(cells));

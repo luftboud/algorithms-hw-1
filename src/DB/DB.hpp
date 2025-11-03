@@ -9,7 +9,7 @@ struct DB {
     // just describe the mode when using constructor
     Mode mode;
     vector<vector<string>> list;
-    unordered_map<string, vector<string>> hash;
+    unordered_multimap<string, vector<string>> hash;
     multimap<string, vector<string>> bst;
 
     explicit DB(Mode m): mode(m) {}
@@ -27,4 +27,11 @@ struct DB {
     // also, it is pretty simple cuz it just calls one of the three funcs
     // accordingly to the data type.
     void change_st_group(const string& phone, const string& group);
+
+    vector<pair<string, string>> find_bg_list(const string& group);
+    vector<pair<string, string>> find_bg_hash(const string& group);
+    vector<pair<string, string>> find_bg_bst(const string& group);
+
+    vector<pair<string, string>> find_by_group(const string& group);
+
 };
