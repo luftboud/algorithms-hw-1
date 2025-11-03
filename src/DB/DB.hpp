@@ -45,6 +45,6 @@ struct DB {
     inline void save_csv(const string& filename,
                          const vector<vector<string>>& rows,
                          const string* header_line = nullptr);
-    void standard_sort();
-    void bst_sort();
+    void standard_sort(bool write_csv);
+    void bst_sort(bool write_csv);
 };

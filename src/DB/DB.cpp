@@ -184,18 +184,19 @@ inline void DB::save_csv(const string& filename,
     for (const auto& r : rows) write_csv_row(out, r);
 }
 
-void DB::standard_sort(){
+void DB::standard_sort(bool write_csv){
     if (this->mode != Mode::List) return;
     auto sorted = this->list;
 
     std::sort(sorted.begin(), sorted.end(),
               [](const auto& a, const auto& b){ return a[8] < b[8]; });
-    const string hdr ="m_name,m_surname,m_email,m_birth_year,m_birth_month,m_birth_day,m_group,m_rating,m_phone_number";
-    this->save_csv("out.csv", sorted, &hdr);
-
+    if (write_csv) {
+        const string hdr = "m_name,m_surname,m_email,m_birth_year,m_birth_month,m_birth_day,m_group,m_rating,m_phone_number";
+        this->save_csv("out.csv", sorted, &hdr);
+    }
 }
 
-void DB::bst_sort() {
+void DB::bst_sort(bool write_csv) {
     if (this->mode != Mode::BST) return;
 
     vector<vector<string>> sorted;
@@ -204,8 +205,10 @@ void DB::bst_sort() {
         sorted.push_back(st.second);
     }
 
-    const string hdr ="m_name,m_surname,m_email,m_birth_year,m_birth_month,m_birth_day,m_group,m_rating,m_phone_number";
-    this->save_csv("out.csv", sorted, &hdr);
+    if (write_csv) {
+        const string hdr = "m_name,m_surname,m_email,m_birth_year,m_birth_month,m_birth_day,m_group,m_rating,m_phone_number";
+        this->save_csv("out.csv", sorted, &hdr);
+    }
 }
 
 

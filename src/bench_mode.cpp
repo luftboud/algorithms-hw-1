@@ -77,4 +77,30 @@ void bench_mode(Mode mode, const char* mode_name) {
         uint64_t total = c1 + c2 + c3;
         std::cout << mode_name << "," << n << "," << total << "," << c1 << "," << c2 << "," << c3 << "\n";
     }
+
+// sorting --------------
+
+    for (size_t n : sizes) {
+        DB database_list(Mode::List);
+        string f = "../students.csv";
+        size_t phone_num = 8;
+
+        initialize(f, n, database_list, phone_num);
+
+        uint64_t s1=0, s2=0;
+        auto t0_1 = clock::now();
+        while (chrono::duration<double>(clock::now() - t0_1).count() < 10.0) {
+            database_list.standard_sort(false);
+            ++s1;
+        }
+        DB database_bst(Mode::BST);
+        initialize(f, n, database_bst, phone_num);
+
+        auto t0_2 = clock::now();
+        while (chrono::duration<double>(clock::now() - t0_2).count() < 10.0) {
+            database_bst.bst_sort(false);
+            ++s2;
+        }
+        std::cout << "standard sort: " << n << " : " << s1 << " ; " << "bst sort" << " : " << s2 << "\n";
+    }
 }
