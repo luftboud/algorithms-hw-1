@@ -2,7 +2,7 @@
 
 int main() {
     string f = "../students.csv";
-    vector<vector<string>> database;
+    DB database(Mode::BST);
     size_t s = 100;
-    initialize(f, s, &database);
+    initialize(f, s, database);
 }
