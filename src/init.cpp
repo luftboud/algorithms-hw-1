@@ -1,9 +1,4 @@
-#include <iostream>
-#include <fstream>
-//#include "DB/DB.hpp"
-#include "DB/DB.cpp"
-#include <bits/stdc++.h>
-using namespace std;
+#include "init.hpp"
 
 static vector<string> parse_csv_line(const string& str) {
     vector<string> out;

@@ -1,9 +1,4 @@
-#include "init.cpp"
-
-#include <random>
-#include <vector>
-#include <string>
-#include <iterator> // std::advance
+#include "bench_mode.hpp"
 
 //just to randomly pick a value for func call
 inline const vector<string>& pick_random_row(const DB& db, mt19937_64& rng) {
@@ -35,7 +30,7 @@ inline const vector<string>& pick_random_row(const DB& db, mt19937_64& rng) {
 }
 
 
-static void bench_mode(Mode mode, const char* mode_name) {
+void bench_mode(Mode mode, const char* mode_name) {
     using clock = chrono::steady_clock;
     mt19937_64 rng(1234567);
 
