@@ -41,4 +41,10 @@ struct DB {
 
     vector<string > groups_by_surname(const string& surname);
 
+    static void write_csv_row(std::ofstream& out, const vector<string>& row);
+    inline void save_csv(const string& filename,
+                         const vector<vector<string>>& rows,
+                         const string* header_line = nullptr);
+    void standard_sort();
+    void bst_sort();
 };

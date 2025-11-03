@@ -159,3 +159,53 @@ vector<string > DB::groups_bs_bst(const string& surname) {
 
     return result;
 }
+
+//sorting --------------
+
+#include <fstream>
+#include <string>
+#include <vector>
+
+void DB::write_csv_row(std::ofstream& out, const vector<string>& row) {
+    for (size_t i = 0; i < row.size(); ++i) {
+        out << row[i];
+        if (i + 1 < row.size()) out << ',';
+    }
+    out << '\n';
+}
+
+inline void DB::save_csv(const string& filename,
+                     const vector<vector<string>>& rows,
+                     const string* header_line)
+{
+    std::ofstream out(filename);
+    if (!out) return;
+    if (header_line) out << *header_line << '\n';
+    for (const auto& r : rows) write_csv_row(out, r);
+}
+
+void DB::standard_sort(){
+    if (this->mode != Mode::List) return;
+    auto sorted = this->list;
+
+    std::sort(sorted.begin(), sorted.end(),
+              [](const auto& a, const auto& b){ return a[8] < b[8]; });
+    const string hdr ="m_name,m_surname,m_email,m_birth_year,m_birth_month,m_birth_day,m_group,m_rating,m_phone_number";
+    this->save_csv("out.csv", sorted, &hdr);
+
+}
+
+void DB::bst_sort() {
+    if (this->mode != Mode::BST) return;
+
+    vector<vector<string>> sorted;
+
+    for (const auto& st : this->bst) {
+        sorted.push_back(st.second);
+    }
+
+    const string hdr ="m_name,m_surname,m_email,m_birth_year,m_birth_month,m_birth_day,m_group,m_rating,m_phone_number";
+    this->save_csv("out.csv", sorted, &hdr);
+}
+
+
